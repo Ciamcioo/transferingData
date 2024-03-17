@@ -33,7 +33,7 @@ _start:
     ja wrongCharacter
 
 letter:
-    subb $0x31, character
+    subb $0x37, character
     mov character, %al
     mov $0x08, %ecx
     jmp push
@@ -45,23 +45,26 @@ number:
     jmp push 
 
 push:
-    shr %al 
+    shl %al 
     jc putOne
     jnc putZero
+here:
     LOOP push
     jmp  displayCorrect
 
 putOne: 
+    mov $0x08, %ebx
     mov %ecx, %edx 
-    sub $0x01, %edx  
-    movb $0x01, binary(%edx) 
-    ret
+    sub %edx, %ebx  
+    movb $0x31, binary(%ebx) 
+    jmp here
 
 putZero:
+    mov  $0x08, %ebx
     mov %ecx, %edx 
-    sub $0x01, %edx  
-    movb $0x00, binary(%edx) 
-    ret
+    sub %edx, %ebx  
+    movb $0x30, binary(%ebx) 
+    jmp here
 
 wrongCharacter:
     movb $'., binary 
