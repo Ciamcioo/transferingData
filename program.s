@@ -11,6 +11,7 @@ STDIN = 0
 .text 
 .global _start
 _start:
+
     mov $SYS_READ, %eax 
     mov $STDIN, %ebx
     mov $character, %ecx
